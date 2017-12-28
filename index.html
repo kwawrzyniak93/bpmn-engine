@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body ng-app="app">
+    <div ng-controller="mainController">
+        <div ng-repeat="item in departs">
+                {{item.name}} <button ng-click="deleteDepart($index)">Usuń</button>
+                <div style="margin-left: 20px" ng-repeat="task in item.tasks">
+                    {{ task }}
+                </div>
+                <button ng-click="addTask($index)">Dodaj zadanie</button><br>
+                <select ng-model="tasks[$index]">
+                    <option value="Przygotowanie wniosku o urlop">Przygotowanie wniosku o urlop</option>>
+                    <option value="Złożenie wniosku o urlop">Złożenie wniosku o urlop</option>>
+                    <option value="Weryfikacja wymagań formalnych złożonego wniosku">Weryfikacja wymagań formalnych złożonego wniosku</option>>
+                </select>
+        </div>
+        <input type="text" ng-model="departName">
+        <button ng-click="addDepart()">dodaj dział</button>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.js"> </script>
+    <script src="/app.js"> </script>
+</body>
+</html>
