@@ -5,25 +5,109 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/angucomplete-alt.css">
+    <style>
+        .flow-container{
+            position: relative;
+        }
+
+        .flow-container .flow-task{
+            position: absolute;
+            width: 170px;
+            height: 140px;
+            background: #eee;
+            box-sizing: border-box;
+            padding: 12px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .flow-container .flow-task .flow-task-button-container{
+            margin-top: 24px;
+        }
+
+        .flow-container .flow-task.executedTask{
+            color: #fff;
+            background: rgb(92, 184, 92);
+            }
+    </style>
 </head>
+
 <body ng-app="app">
-    <div ng-controller="mainController">
-        <div ng-repeat="item in departs">
-                {{item.name}} <button ng-click="deleteDepart($index)">Usuń</button>
-                <div style="margin-left: 20px" ng-repeat="task in item.tasks">
-                    {{ task }}
-                </div>
-                <button ng-click="addTask($index)">Dodaj zadanie</button><br>
-                <select ng-model="tasks[$index]">
-                    <option value="Przygotowanie wniosku o urlop">Przygotowanie wniosku o urlop</option>>
-                    <option value="Złożenie wniosku o urlop">Złożenie wniosku o urlop</option>>
-                    <option value="Weryfikacja wymagań formalnych złożonego wniosku">Weryfikacja wymagań formalnych złożonego wniosku</option>>
-                </select>
+    
+       
+    
+        <!-- Main jumbotron for a primary marketing message or call to action -->
+        <div class="jumbotron">
+          <div class="container">
+            <h1 class="display-3">BPMN web modeler</h1>
+            <p>Zamodeluj swoje procesy biznesowe online</p>
+            
+          </div>
         </div>
-        <input type="text" ng-model="departName">
-        <button ng-click="addDepart()">dodaj dział</button>
+    
+        <div class="container" ng-controller="mainController">
+                <p><button class="btn btn-primary btn-lg" ng-click="send()" role="button">Wyślij »</button>
+                    <button class="btn btn-default btn-lg" ng-click="showXML()" role="button">Pokaż XML »</button></p>
+          <!-- Example row of columns -->
+          <div class="row">
+              <div class="col-md-8">
+                    <table class="table">
+                        <tbody>
+                            <tr ng-repeat="item in departs">
+                             <td width="20%">
+                                    {{item.name}}
+                             </td>
+                             <td width="40%">
+                                <angucomplete-alt id="ex1"
+                                placeholder="Wyszukaj zadanie"
+                                pause="100"
+                                selected-object="selectedTask"
+                                local-data="tasks"
+                                search-fields="name"
+                                title-field="name"
+                                minlength="1"
+                                input-class="form-control form-control-small"/>
+                             </td>
+                            </tr>
+                        </tbody>        
+                    </table>
+                
+              </div>
+              <div class="col-md-4"> 
+                    <input type="text" ng-model="departName" class="form-control form-control-small">
+                    
+                    <button ng-click="addDepart()" class="btn btn-success btn-xs">Dodaj dział</button>
+            
+              </div>
+              <div class="row">
+                <div class="col-md-12"> 
+                    <div class="flow-container" style="height:185px">
+                        <div class="flow-task" ng-style="getLeftPosition($index)" ng-repeat="task in flowList">
+                            {{ task.title }}
+                            <div class="text-center flow-task-button-container">
+                                <button ng-click="deleteTask(task)" class="btn btn-danger btn-xs">Usuń</button>
+                            </div>
+                        </div>
+                    </div>
+              </div>
+        <div id="xml-container" class="col-md-12"></div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.js"> </script>
-    <script src="/app.js"> </script>
-</body>
+           
+        </div>
+    
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.js"> </script>
+        <script src="/libs/angucomplete-alt.js"> </script>
+        <script src="/app.js"> </script>
+        
+    
+        </div> <!-- /container -->
+    
+    
+
+      
+    
+    </body>
+
 </html>
